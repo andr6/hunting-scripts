@@ -3,10 +3,6 @@ Just a few basic scripts I've written as I get started doing bug hunting/appsec 
 
 ## soisearch
 __Search for strings of interest (soi!) in a file.__
-<p align="center">
-  <img src="img/soisearch2.png">
-</p>
-
 ### Usage
 ```
 usage: soisearch.py [-h] [--input INPUT_FILE] [--output OUTPUT_FILE] TARGET
@@ -21,3 +17,7 @@ optional arguments:
   --input INPUT_FILE    input file of search strings
   --output OUTPUT_FILE  output file to save results to
 ```
+
+<p align="center">
+  <img src="img/soisearch2.png">
+</p>
