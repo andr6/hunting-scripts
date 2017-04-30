@@ -43,7 +43,6 @@ if __name__ == "__main__":
                             help='output file to save results to')
     
     args = parser.parse_args()
-    print args.target
 
     # handle input files containing search strings
     if args.input_file:
