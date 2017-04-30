@@ -2,7 +2,7 @@
 """
 soisearch.py: search for strings of interest against a given file
 """
-import subprocess
+import subprocess, sys
 import argparse
 
 def soi_search(target, search_strs):
@@ -11,16 +11,15 @@ def soi_search(target, search_strs):
     usage: soi_search(target=<target-file>, search_strs=<strings to search for>)
     """
     try:
+        print "[FILE: \t%s]" % (target)
         for func in search_strs.keys():
-            # run strings against the target file, saving the output
-            process = subprocess.Popen(["strings", target], stdout=subprocess.PIPE, universal_newlines=True)
+            process = subprocess.Popen(["strings", target], 
+                                        stdout=subprocess.PIPE, 
+                                        universal_newlines=True)
             for line in process.stdout:
-                # if the name of the function is -1 there was no match, else add one to the counter
-                # for the given function
-                if str(line).find(func) == -1: pass
+                if str(line).find(func) == -1: pass 
                 else: search_strs[func] += 1
-            
-            # show count after all iterations are complete
+
             print "[+] %s: \t%d" % (func, search_strs[func])
             process.terminate
     except subprocess.CalledProcessError as err:
@@ -28,11 +27,19 @@ def soi_search(target, search_strs):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description='Search a file against a list of strings for strings of interest.'
-        )
-    parser.add_argument('target', metavar='TARGET', type=str, help='target file to search against')
-    parser.add_argument('--input', dest='input_file', action='store', help='input file of search strings')
+    # Argument handling
+    parser = argparse.ArgumentParser(description=\
+        'Search a file against a list of strings for strings of interest.')
+    
+    parser.add_argument('target', metavar='TARGET', type=str, 
+                            help='target file to search against')
+    
+    parser.add_argument('--input', dest='input_file', action='store', 
+                            help='input file of search strings')
+    
+    parser.add_argument('--output', dest='output_file', action='store',
+                            help='output file to save results to')
+    
     args = parser.parse_args()
 
     if args.input_file:
@@ -50,4 +57,10 @@ if __name__ == "__main__":
             "malloc": 0
         }
     
-    soi_search(args.target, SOI)
+    if args.output_file:
+        with open(args.output_file, 'w') as sys.stdout:
+            soi_search(args.target, SOI)
+    else:
+        soi_search(args.target, SOI)
+
+    
