@@ -6,10 +6,10 @@ import subprocess
 import argparse
 
 def soi_search(target, search_strs):
-"""
-Search for strings of interest (soi!).
-usage: soi_search(target=<target-file>, search_strs=<strings to search for>)
-"""
+    """
+    Search for strings of interest (soi!).
+    usage: soi_search(target=<target-file>, search_strs=<strings to search for>)
+    """
     try:
         for func in search_strs.keys():
             # run strings against the target file, saving the output
